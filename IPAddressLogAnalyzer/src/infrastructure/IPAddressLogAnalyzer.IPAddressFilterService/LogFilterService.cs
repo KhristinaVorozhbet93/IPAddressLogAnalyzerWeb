@@ -1,17 +1,16 @@
-﻿using IPAddressLogAnalyzer.Configurations;
-using IPAddressLogAnalyzer.Domain.Entities;
+﻿using IPAddressLogAnalyzer.Domain.Entities;
 using IPAddressLogAnalyzer.Domain.Interfaces;
 using Microsoft.Extensions.Options;
 using System.Net;
-namespace IPAddressLogAnalyzer.IPAddressFilterService
+namespace IPAddressLogAnalyzer.FilterService
 {
-    public class IPAddressFilterService : IIPAddressFilterService
+    public class LogFilterService : ILogFilterService
     {
         private readonly DateTime _timeStart;
         private readonly DateTime _timeEnd;
         private readonly string? _addressStart;
         private readonly string? _addressMask;
-        public IPAddressFilterService(IOptions<IPConfiguration> options)
+        public LogFilterService(IOptions<IPConfiguration> options)
         {
             _timeStart = options.Value.TimeStart;
             _timeEnd = options.Value.TimeEnd;
@@ -19,47 +18,56 @@ namespace IPAddressLogAnalyzer.IPAddressFilterService
             _addressMask = options.Value.AddressMask;
         }
 
-        public Dictionary<IPAddress, int> GetIPAddressesWithConfigurations(List<IP> ipAddresses)
+        public List<AccesLog> GetIPAddressesWithConfigurations(List<AccesLog> logs)
         {
-            ipAddresses.Sort();
-            var timeAddresses = GetIPAddressesInTimeInterval(ipAddresses, _timeStart, _timeEnd);
+            logs.Sort();
+            var timeAddresses = GetIPAddressesInTimeInterval(logs, _timeStart, _timeEnd);
 
-            var countTimeRequestIPAddresses = GetIPAddressesWithCountTimeRequests(timeAddresses);
+            var countTimeRequestLogs = GetIPAddressesWithCountTimeRequests(timeAddresses);
 
             if (!string.IsNullOrEmpty(_addressStart) && !string.IsNullOrEmpty(_addressMask))
             {
-                var filtredAddresses = GetRangeIPAddresses
-                    (countTimeRequestIPAddresses, IPAddress.Parse(_addressStart), IPAddress.Parse(_addressMask));
-                return filtredAddresses;
+                var filtredLogs = GetRangeIPAddresses
+                    (countTimeRequestLogs, IPAddress.Parse(_addressStart), IPAddress.Parse(_addressMask));
+                return filtredLogs;
             }
-            return countTimeRequestIPAddresses;
+            return countTimeRequestLogs;
         }
 
-        public Dictionary<IPAddress, int> GetRangeIPAddresses(Dictionary<IPAddress, int> ipAddresses, IPAddress addressStart, IPAddress addressMask)
+        public List<AccesLog> GetRangeIPAddresses(List<AccesLog> logs, IPAddress addressStart, IPAddress addressMask)
         {
-            Dictionary<IPAddress, int> filteredIPAddresses = new Dictionary<IPAddress, int>();
-            foreach (var ip in ipAddresses)
+            List<AccesLog> filteredLogs = new List<AccesLog>();
+            foreach (var log in logs)
             {
                 if (IsIPAddressInRange
-                    (ip.Key, addressStart, addressMask))
+                    (log.Address, addressStart, addressMask))
                 {
-                    filteredIPAddresses.Add(ip.Key, ip.Value);
+                    filteredLogs.Add(log);
                 }
             }
-            return filteredIPAddresses;
+            return filteredLogs;
         }
-        public List<IP> GetIPAddressesInTimeInterval(List<IP> ipAddresses, DateTime timeStart, DateTime timeEnd)
+        public List<AccesLog> GetIPAddressesInTimeInterval(List<AccesLog> logs, DateTime timeStart, DateTime timeEnd)
         {
-            return ipAddresses.Where(ip =>
+            return logs.Where(ip =>
                     ip.TimeRequest <= timeEnd &&
                     ip.TimeRequest >= timeStart)
                     .ToList();
         }
-        public Dictionary<IPAddress, int> GetIPAddressesWithCountTimeRequests(List<IP> ipAddresses)
+        public List<AccesLog> GetIPAddressesWithCountTimeRequests(List<AccesLog> logs)
         {
-            return ipAddresses
-                    .GroupBy(ip => ip.Address)
-                    .ToDictionary(group => group.Key, group => group.Count());
+            return logs
+                .GroupBy(ip => ip.Address) 
+                .Select(group => new AccesLog(
+                    group.Key,
+                    group.First().TimeRequest, 
+                    group.Sum(log => log.RequestCount), 
+                    group.First().Resource, 
+                    group.First().Path, 
+                    group.First().Method, 
+                    group.First().Response
+                ))
+                .ToList();
         }
 
         private bool IsIPAddressInRange(IPAddress ipAddress, IPAddress addressStart, IPAddress addressMask)

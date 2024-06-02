@@ -4,16 +4,25 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>4eb7fe34-5dae-4cb0-ab9e-a0bd8d30edc1</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Minio" Version="6.0.2" />
+    <PackageReference Include="Npgsql" Version="8.0.3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\domain\IPAddressLogAnalyzer.Domain\IPAddressLogAnalyzer.Domain.csproj" />
-    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.IPAddressFilterService\IPAddressLogAnalyzer.IPAddressFilterService.csproj" />
+    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.DataEntityFramework\IPAddressLogAnalyzer.DataEntityFramework.csproj" />
+    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.FileReaderService\IPAddressLogAnalyzer.FileReaderService.csproj" />
+    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.IPAddressFilterService\IPAddressLogAnalyzer.FilterService.csproj" />
   </ItemGroup>
 
 </Project>

@@ -15,7 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain", "domain", "{EAA6AC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPAddressLogAnalyzer.Domain", "IPAddressLogAnalyzer\src\domain\IPAddressLogAnalyzer.Domain\IPAddressLogAnalyzer.Domain.csproj", "{7B6D57CC-FFE6-4F38-A287-E41F1C928FD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPAddressLogAnalyzer.IPAddressFilterService", "IPAddressLogAnalyzer\src\infrastructure\IPAddressLogAnalyzer.IPAddressFilterService\IPAddressLogAnalyzer.IPAddressFilterService.csproj", "{07E804B5-B7ED-4BD5-A191-6184A6678CAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPAddressLogAnalyzer.FilterService", "IPAddressLogAnalyzer\src\infrastructure\IPAddressLogAnalyzer.IPAddressFilterService\IPAddressLogAnalyzer.FilterService.csproj", "{07E804B5-B7ED-4BD5-A191-6184A6678CAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPAddressLogAnalyzer.DataEntityFramework", "IPAddressLogAnalyzer\src\infrastructure\IPAddressLogAnalyzer.DataEntityFramework\IPAddressLogAnalyzer.DataEntityFramework.csproj", "{1F3E98D5-0D05-4463-8A7F-C05CD387E81B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPAddressLogAnalyzer.FileReaderService", "IPAddressLogAnalyzer\src\infrastructure\IPAddressLogAnalyzer.FileReaderService\IPAddressLogAnalyzer.FileReaderService.csproj", "{B8CA4BCC-82EE-49BB-BC7D-99E73CD7FB74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,14 @@ Global
 		{07E804B5-B7ED-4BD5-A191-6184A6678CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07E804B5-B7ED-4BD5-A191-6184A6678CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07E804B5-B7ED-4BD5-A191-6184A6678CAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F3E98D5-0D05-4463-8A7F-C05CD387E81B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F3E98D5-0D05-4463-8A7F-C05CD387E81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F3E98D5-0D05-4463-8A7F-C05CD387E81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F3E98D5-0D05-4463-8A7F-C05CD387E81B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8CA4BCC-82EE-49BB-BC7D-99E73CD7FB74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8CA4BCC-82EE-49BB-BC7D-99E73CD7FB74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8CA4BCC-82EE-49BB-BC7D-99E73CD7FB74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8CA4BCC-82EE-49BB-BC7D-99E73CD7FB74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +58,8 @@ Global
 		{EAA6AC3D-D4B1-4695-B687-19815EC0BC30} = {19A9754A-48CD-4652-8E8F-883231DF575E}
 		{7B6D57CC-FFE6-4F38-A287-E41F1C928FD9} = {EAA6AC3D-D4B1-4695-B687-19815EC0BC30}
 		{07E804B5-B7ED-4BD5-A191-6184A6678CAB} = {6D0D84EA-6C13-435D-9A8D-8BF858CC2EF4}
+		{1F3E98D5-0D05-4463-8A7F-C05CD387E81B} = {6D0D84EA-6C13-435D-9A8D-8BF858CC2EF4}
+		{B8CA4BCC-82EE-49BB-BC7D-99E73CD7FB74} = {6D0D84EA-6C13-435D-9A8D-8BF858CC2EF4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D02BFB6-D6E9-4E51-A396-F492C66DF188}

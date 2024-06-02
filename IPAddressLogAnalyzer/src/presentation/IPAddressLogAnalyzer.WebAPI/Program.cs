@@ -1,21 +1,34 @@
-using IPAddressLogAnalyzer.Configurations;
-using IPAddressLogAnalyzer.Domain.Interfaces;
-using IPAddressLogAnalyzer.Configurations.Interfaces;
 using Minio;
-using Microsoft.AspNetCore.DataProtection;
+using SocialNetwork.DataEntityFramework;
+using Microsoft.EntityFrameworkCore;
+using IPAddressLogAnalyzer.Domain.Interfaces;
+using IPAddressLogAnalyzer.FileReaderService;
+using IPAddressLogAnalyzer.FilterService;
 
-namespace IPAddressLogAnalyzer
+namespace IPAddressLogAnalyzer.WebAPI
 {
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var postgresConfig = builder.Configuration
+                .GetRequiredSection("PostgresConfig")
+                .Get<PostgresConfig>();
+            if (postgresConfig is null)
+            {
+                throw new InvalidOperationException("PostgresConfig is not configured");
+            }
 
-            // Add services to the container.
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseNpgsql(
+                    $"Host={postgresConfig.ServerName};" +
+                    $"Port={postgresConfig.Port};" +
+                    $"Database={postgresConfig.DatabaseName};" +
+                    $"Username={postgresConfig.UserName};" +
+                    $"Password={postgresConfig.Password};"));
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -24,16 +37,18 @@ namespace IPAddressLogAnalyzer
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
 
-            builder.Services.AddScoped<IConfigurationParser, ConfigurationParser>();
-            //builder.Services.AddScoped<IIPAddressFilterService, IPAddressFilterService>();
+            builder.Services.AddOptions<LogFileConfig>()
+                .BindConfiguration("LogFileConfig")
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
 
-            //     builder.Services.AddScoped<IConfigurationsProvider>(provider =>
-            //new FileConfigurationsProvider(ipConfigSection, provider.GetRequiredService<IConfigurationParser>()));
+            builder.Services.AddScoped<ILogFilterService, LogFilterService>();
+            builder.Services.AddScoped<ILogReaderService, ILogFileReaderService>();
+
             //builder.Services.AddScoped<IPService>();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -46,23 +61,32 @@ namespace IPAddressLogAnalyzer
 
             app.MapControllers();
 
-            app.MapPost("/file", async() => {
-                var endpoint = "http://192.168.1.6:9000";
+            app.MapGet("/file", async () =>
+            {
+                var endpoint = @"192.168.1.6:9000/buckets";
                 var accessKey = "";
-                var secretKey = ""; 
-        
+                var secretKey = "";
+
                 var minioClient = new MinioClient()
                 .WithEndpoint(endpoint)
                 .WithCredentials(accessKey, secretKey);
+     
+                //var getListBucketsTask = await minioClient.ListBucketsAsync().ConfigureAwait(false);
 
-                var getListBucketsTask = await minioClient.ListBucketsAsync().ConfigureAwait(false);
-
-                foreach (var bucket in getListBucketsTask.Buckets)
-                {
-                    Console.WriteLine(bucket.Name + " " + bucket.CreationDateDateTime);
-                }
+                //if (getListBucketsTask.Buckets is not null)
+                //{
+                //    foreach (var bucket in getListBucketsTask.Buckets)
+                //    {
+                //        if (bucket is not null)
+                //            Console.WriteLine(bucket.Name + " " + bucket.CreationDateDateTime);
+                //        else Console.WriteLine("Пусто");
+                //    }
+                //}
+                //else
+                //{
+                //    Console.WriteLine("Пусто");
+                //}
             });
-
 
             app.Run();
         }

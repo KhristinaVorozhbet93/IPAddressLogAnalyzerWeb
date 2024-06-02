@@ -3,16 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IPAddressLogAnalyzer.FilterService
 {
-    public class IPConfiguration
+    public class LogFileConfig
     {
         [Required]
-        public DateTime TimeStart { get; set; }
-
-        [Required]
-        public DateTime TimeEnd { get; set; }
-
-        public string? AddressStart { get; set; }
-        public string? AddressMask { get; set; }
-
+        public string FilePath{ get; set; }
     }
 }
