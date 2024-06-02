@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPAddressLogAnalyzer.WebAPI", "IPAddressLogAnalyzer\src\presentation\IPAddressLogAnalyzer.WebAPI\IPAddressLogAnalyzer.WebAPI.csproj", "{F4D8C6B6-7219-48FC-B9C9-FD5A2D6AA6B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{19A9754A-48CD-4652-8E8F-883231DF575E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{6D0D84EA-6C13-435D-9A8D-8BF858CC2EF4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "presentation", "presentation", "{4937146E-B492-48B6-B9BD-6716109495B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain", "domain", "{EAA6AC3D-D4B1-4695-B687-19815EC0BC30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPAddressLogAnalyzer.Domain", "IPAddressLogAnalyzer\src\domain\IPAddressLogAnalyzer.Domain\IPAddressLogAnalyzer.Domain.csproj", "{7B6D57CC-FFE6-4F38-A287-E41F1C928FD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPAddressLogAnalyzer.IPAddressFilterService", "IPAddressLogAnalyzer\src\infrastructure\IPAddressLogAnalyzer.IPAddressFilterService\IPAddressLogAnalyzer.IPAddressFilterService.csproj", "{07E804B5-B7ED-4BD5-A191-6184A6678CAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F4D8C6B6-7219-48FC-B9C9-FD5A2D6AA6B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4D8C6B6-7219-48FC-B9C9-FD5A2D6AA6B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4D8C6B6-7219-48FC-B9C9-FD5A2D6AA6B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4D8C6B6-7219-48FC-B9C9-FD5A2D6AA6B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B6D57CC-FFE6-4F38-A287-E41F1C928FD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B6D57CC-FFE6-4F38-A287-E41F1C928FD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B6D57CC-FFE6-4F38-A287-E41F1C928FD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B6D57CC-FFE6-4F38-A287-E41F1C928FD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07E804B5-B7ED-4BD5-A191-6184A6678CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07E804B5-B7ED-4BD5-A191-6184A6678CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07E804B5-B7ED-4BD5-A191-6184A6678CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07E804B5-B7ED-4BD5-A191-6184A6678CAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F4D8C6B6-7219-48FC-B9C9-FD5A2D6AA6B6} = {4937146E-B492-48B6-B9BD-6716109495B4}
+		{6D0D84EA-6C13-435D-9A8D-8BF858CC2EF4} = {19A9754A-48CD-4652-8E8F-883231DF575E}
+		{4937146E-B492-48B6-B9BD-6716109495B4} = {19A9754A-48CD-4652-8E8F-883231DF575E}
+		{EAA6AC3D-D4B1-4695-B687-19815EC0BC30} = {19A9754A-48CD-4652-8E8F-883231DF575E}
+		{7B6D57CC-FFE6-4F38-A287-E41F1C928FD9} = {EAA6AC3D-D4B1-4695-B687-19815EC0BC30}
+		{07E804B5-B7ED-4BD5-A191-6184A6678CAB} = {6D0D84EA-6C13-435D-9A8D-8BF858CC2EF4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D02BFB6-D6E9-4E51-A396-F492C66DF188}
+	EndGlobalSection
+EndGlobal
