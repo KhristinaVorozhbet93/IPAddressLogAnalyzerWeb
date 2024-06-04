@@ -8,7 +8,7 @@ namespace IPAddressLogAnalyzer.WebAPI
         public string DirectoryPath { get; set; }
 
         [Required]
-        public TimeSpan TimeInterval { get; set; }
+        public int TimeInterval { get; set; }
 
         [Required]
         public int CountFiles { get; set; }

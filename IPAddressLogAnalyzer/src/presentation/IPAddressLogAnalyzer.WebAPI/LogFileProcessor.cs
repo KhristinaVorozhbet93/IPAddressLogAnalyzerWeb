@@ -41,7 +41,7 @@ namespace IPAddressLogAnalyzer.WebAPI
                     _logger.LogError(ex, "Ошибка при обработке файлов логов");
                 }
 
-                await Task.Delay(_options.Value.TimeInterval, stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(_options.Value.TimeInterval), stoppingToken);
             }
         }
 
@@ -54,6 +54,7 @@ namespace IPAddressLogAnalyzer.WebAPI
             try
             {
                 await logReaderService.ReadFromFiletoListAsync(logFile, stoppingToken);
+                //здесь будет запись в бд
             }
             catch (Exception ex)
             {
