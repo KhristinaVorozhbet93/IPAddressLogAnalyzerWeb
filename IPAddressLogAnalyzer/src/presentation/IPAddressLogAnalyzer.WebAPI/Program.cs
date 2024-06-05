@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using IPAddressLogAnalyzer.Domain.Interfaces;
 using IPAddressLogAnalyzer.FileReaderService;
 using IPAddressLogAnalyzer.FilterService;
+using System.Linq;
 
 namespace IPAddressLogAnalyzer.WebAPI
 {
@@ -37,13 +38,15 @@ namespace IPAddressLogAnalyzer.WebAPI
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
 
-            builder.Services.AddOptions<LogFileConfig>()
-                .BindConfiguration("LogFileConfig")
+            builder.Services.AddOptions<LogFileProccesorSettings>()
+                .BindConfiguration("LogFileProccesorSettings")
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
 
+            
             builder.Services.AddScoped<ILogFilterService, LogFilterService>();
-            builder.Services.AddScoped<ILogReaderService, ILogFileReaderService>();
+            builder.Services.AddScoped<ILogReaderService, LogFileReaderService>();
+            builder.Services.AddHostedService<LogFileProcessor>();
 
             //builder.Services.AddScoped<IPService>();
 
@@ -61,7 +64,7 @@ namespace IPAddressLogAnalyzer.WebAPI
 
             app.MapControllers();
 
-            app.MapGet("/file", async () =>
+            app.MapGet("/file", async (ILogReaderService service) =>
             {
                 var endpoint = @"192.168.1.6:9000/buckets";
                 var accessKey = "";
@@ -70,7 +73,7 @@ namespace IPAddressLogAnalyzer.WebAPI
                 var minioClient = new MinioClient()
                 .WithEndpoint(endpoint)
                 .WithCredentials(accessKey, secretKey);
-     
+
                 //var getListBucketsTask = await minioClient.ListBucketsAsync().ConfigureAwait(false);
 
                 //if (getListBucketsTask.Buckets is not null)
@@ -86,6 +89,14 @@ namespace IPAddressLogAnalyzer.WebAPI
                 //{
                 //    Console.WriteLine("Пусто");
                 //}
+
+                string path = "C:\\Users\\Христина\\Desktop\\Логи\\";
+                var logFiles = Directory.GetFiles(path, "*.log", SearchOption.TopDirectoryOnly);
+
+                foreach (var logFile in logFiles.OrderBy(f => f).Take(3))
+                {
+                    Console.WriteLine(logFile);
+                }
             });
 
             app.Run();

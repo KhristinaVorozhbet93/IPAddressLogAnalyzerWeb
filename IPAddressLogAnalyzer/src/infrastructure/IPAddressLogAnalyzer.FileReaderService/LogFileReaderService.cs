@@ -1,36 +1,31 @@
 ﻿using IPAddressLogAnalyzer.Domain.Entities;
 using IPAddressLogAnalyzer.Domain.Interfaces;
-using IPAddressLogAnalyzer.FilterService;
-using Microsoft.Extensions.Options;
 using System.Globalization;
 using System.Net;
 
 namespace IPAddressLogAnalyzer.FileReaderService
 {
-    public class ILogFileReaderService : ILogReaderService
+    public class LogFileReaderService : ILogReaderService
     {
         private readonly ILogFilterService _iPAddressFilterService;
-        private string _filePath;
-        public ILogFileReaderService(IOptions<LogFileConfig> options,
-            ILogFilterService iPAddressFilterService)
+        public LogFileReaderService(ILogFilterService iPAddressFilterService)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(nameof(iPAddressFilterService));
             _iPAddressFilterService = iPAddressFilterService;
-            _filePath = options.Value.FilePath;
         }
-        public async Task<List<AccesLog>> ReadFromFileAsync(CancellationToken cancellationToken)
+        public async Task<List<AccesLog>> ReadFromFiletoListAsync(string filePath, CancellationToken cancellationToken)
         {
-            ArgumentException.ThrowIfNullOrEmpty(_filePath);
+            ArgumentException.ThrowIfNullOrEmpty(filePath);
 
-            if (!File.Exists(_filePath))
+            if (!File.Exists(filePath))
             {
                 throw new FileNotFoundException
-                    ($"Файл по заданному пути не обнаружен: {_filePath}");
+                    ($"Файл по заданному пути не обнаружен: {filePath}");
             }
 
             List<AccesLog> logs = new List<AccesLog>();
             CultureInfo provider = new CultureInfo("ru-RU");
-            using (StreamReader reader = new StreamReader(_filePath))
+            using (StreamReader reader = new StreamReader(filePath))
             {
                 string? line;
                 while ((line = await reader.ReadLineAsync(cancellationToken)) != null)
@@ -58,7 +53,7 @@ namespace IPAddressLogAnalyzer.FileReaderService
                 var filtredLogs = _iPAddressFilterService.GetIPAddressesWithConfigurations(logs);
                 return filtredLogs;
             }
-            throw new ArgumentException($"Не удалось найти файл: {_filePath}");
+            throw new ArgumentException($"Не удалось найти файл: {filePath}");
         }
     }
 }
