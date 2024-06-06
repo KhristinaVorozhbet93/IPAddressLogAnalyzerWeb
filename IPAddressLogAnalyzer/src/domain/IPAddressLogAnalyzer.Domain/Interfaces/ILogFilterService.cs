@@ -5,9 +5,9 @@ namespace IPAddressLogAnalyzer.Domain.Interfaces
 {
     public interface ILogFilterService
     {
-        List<AccesLog> GetIPAddressesWithConfigurations(List<AccesLog> ipAddresses);
-        List<AccesLog> GetRangeIPAddresses(List<AccesLog> ipAddresses, IPAddress addressStart, IPAddress addressMask);
-        List<AccesLog> GetIPAddressesInTimeInterval(List<AccesLog> ipAddresses, DateTime timeStart, DateTime timeEnd);
-        List<AccesLog> GetIPAddressesWithCountTimeRequests(List<AccesLog> ipAddresses);
+        List<LogRecord> GetIPAddressesWithConfigurations(List<LogRecord> ipAddresses);
+        List<LogRecord> GetRangeIPAddresses(List<LogRecord> ipAddresses, IPAddress addressStart, IPAddress addressMask);
+        List<LogRecord> GetIPAddressesInTimeInterval(List<LogRecord> ipAddresses, DateTime timeStart, DateTime timeEnd);
+        List<LogRecord> GetIPAddressesWithCountTimeRequests(List<LogRecord> ipAddresses);
     }
 }

@@ -1,16 +1,21 @@
 ﻿using IPAddressLogAnalyzer.Domain.Interfaces;
 using Microsoft.Extensions.Options;
+using Minio;
+using Minio.DataModel;
+using Minio.DataModel.Args;
+using Minio.Exceptions;
 
 namespace IPAddressLogAnalyzer.WebAPI
 {
-    public class LogFileProcessor : BackgroundService
+    public class LogMinioProcessor : BackgroundService
     {
-        private readonly ILogger<LogFileProcessor> _logger; 
-        private readonly IOptions<LogFileProcessorSettings> _options;
+        private readonly ILogger<LogMinioProcessor> _logger;
+        private readonly IOptions<LogMinioSettings> _options;
         private readonly IServiceProvider _serviceProvider;
         private readonly HashSet<string> _processedFiles = new HashSet<string>();
 
-        public LogFileProcessor(ILogger<LogFileProcessor> logger, IOptions<LogFileProcessorSettings> options,
+        public LogMinioProcessor(ILogger<LogMinioProcessor> logger,
+            IOptions<LogMinioSettings> options,
             IServiceProvider serviceProvider)
         {
             _logger = logger;
@@ -22,9 +27,38 @@ namespace IPAddressLogAnalyzer.WebAPI
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                //можно доавбить minio через внедрение зависимостей
+
+                var endpoint = _options.Value.Endpoint;
+                var accessKey = _options.Value.AccesKey;
+                var secretKey = _options.Value.SecretKey;
+                var bucketName = _options.Value.BucketName;
+
+                var minioClient = new MinioClient()
+                    .WithEndpoint(endpoint)
+                    .WithCredentials(accessKey, secretKey);
+
+
+                //скачиваем все файлы
+                //то нам нужно запоминать дату последнего обращения
+                //удалять файлы которые обработали можно
+                //получать файлы после указанной даты
+
+                //гугл, how to use minio api 
+                
+                var location = "us-east-1";
+                var objectName = "golden-oldies.zip";
+                var filePath = "C:\\Users\\username\\Downloads\\golden_oldies.mp3";
+                var contentType = "application/zip";
+
                 try
                 {
-                    var logFiles = Directory.GetFiles(_options.Value.DirectoryPath, "*.log", SearchOption.TopDirectoryOnly);
+
+                    //Make a bucket on the server, if not already present.
+                    //вот здесь получаем файлы из minio
+
+
+                    var logFiles = Directory.GetFiles("_options.Value.DirectoryPath", "*.log", SearchOption.TopDirectoryOnly);
 
                     foreach (var logFile in logFiles.OrderBy(f => f).Take(_options.Value.CountFiles))
                     {
@@ -42,6 +76,7 @@ namespace IPAddressLogAnalyzer.WebAPI
                 }
 
                 await Task.Delay(TimeSpan.FromSeconds(_options.Value.TimeInterval), stoppingToken);
+
             }
         }
 
@@ -63,4 +98,3 @@ namespace IPAddressLogAnalyzer.WebAPI
         }
     }
 }
-

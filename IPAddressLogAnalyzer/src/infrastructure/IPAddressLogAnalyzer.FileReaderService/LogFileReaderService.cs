@@ -13,7 +13,7 @@ namespace IPAddressLogAnalyzer.FileReaderService
             ArgumentException.ThrowIfNullOrWhiteSpace(nameof(iPAddressFilterService));
             _iPAddressFilterService = iPAddressFilterService;
         }
-        public async Task<List<AccesLog>> ReadFromFiletoListAsync(string filePath, CancellationToken cancellationToken)
+        public async Task<List<LogRecord>> ReadFromFiletoListAsync(string filePath, CancellationToken cancellationToken)
         {
             ArgumentException.ThrowIfNullOrEmpty(filePath);
 
@@ -23,7 +23,7 @@ namespace IPAddressLogAnalyzer.FileReaderService
                     ($"Файл по заданному пути не обнаружен: {filePath}");
             }
 
-            List<AccesLog> logs = new List<AccesLog>();
+            List<LogRecord> logs = new List<LogRecord>();
             CultureInfo provider = new CultureInfo("ru-RU");
             using (StreamReader reader = new StreamReader(filePath))
             {
@@ -42,7 +42,7 @@ namespace IPAddressLogAnalyzer.FileReaderService
                         var method = parts[8].Trim();
                         var response = parts[9].Trim();
 
-                        logs.Add(new AccesLog(ipAddress, timeRequest, countRequest, resource, path, method, response));
+                        logs.Add(new LogRecord(ipAddress, timeRequest, countRequest, resource, path, method, response));
                     }
                     else
                     {

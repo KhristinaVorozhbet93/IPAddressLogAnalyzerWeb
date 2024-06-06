@@ -2,7 +2,7 @@
 
 namespace IPAddressLogAnalyzer.WebAPI
 {
-    public class LogFileProccesorSettings
+    public class LogFileProcessorSettings
     {
         [Required]
         public string DirectoryPath { get; set; }

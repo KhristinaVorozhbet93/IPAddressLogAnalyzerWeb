@@ -18,7 +18,7 @@ namespace IPAddressLogAnalyzer.FilterService
             _addressMask = options.Value.AddressMask;
         }
 
-        public List<AccesLog> GetIPAddressesWithConfigurations(List<AccesLog> logs)
+        public List<LogRecord> GetIPAddressesWithConfigurations(List<LogRecord> logs)
         {
             logs.Sort();
             var timeAddresses = GetIPAddressesInTimeInterval(logs, _timeStart, _timeEnd);
@@ -34,31 +34,31 @@ namespace IPAddressLogAnalyzer.FilterService
             return countTimeRequestLogs;
         }
 
-        public List<AccesLog> GetRangeIPAddresses(List<AccesLog> logs, IPAddress addressStart, IPAddress addressMask)
+        public List<LogRecord> GetRangeIPAddresses(List<LogRecord> logs, IPAddress addressStart, IPAddress addressMask)
         {
-            List<AccesLog> filteredLogs = new List<AccesLog>();
+            List<LogRecord> filteredLogs = new List<LogRecord>();
             foreach (var log in logs)
             {
                 if (IsIPAddressInRange
-                    (log.Address, addressStart, addressMask))
+                    (log.ClientIpAddress, addressStart, addressMask))
                 {
                     filteredLogs.Add(log);
                 }
             }
             return filteredLogs;
         }
-        public List<AccesLog> GetIPAddressesInTimeInterval(List<AccesLog> logs, DateTime timeStart, DateTime timeEnd)
+        public List<LogRecord> GetIPAddressesInTimeInterval(List<LogRecord> logs, DateTime timeStart, DateTime timeEnd)
         {
             return logs.Where(ip =>
                     ip.TimeRequest <= timeEnd &&
                     ip.TimeRequest >= timeStart)
                     .ToList();
         }
-        public List<AccesLog> GetIPAddressesWithCountTimeRequests(List<AccesLog> logs)
+        public List<LogRecord> GetIPAddressesWithCountTimeRequests(List<LogRecord> logs)
         {
             return logs
-                .GroupBy(ip => ip.Address) 
-                .Select(group => new AccesLog(
+                .GroupBy(ip => ip.ClientIpAddress) 
+                .Select(group => new LogRecord(
                     group.Key,
                     group.First().TimeRequest, 
                     group.Sum(log => log.RequestCount), 

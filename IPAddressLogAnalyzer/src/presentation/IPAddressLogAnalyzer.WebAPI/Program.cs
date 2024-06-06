@@ -5,6 +5,13 @@ using IPAddressLogAnalyzer.Domain.Interfaces;
 using IPAddressLogAnalyzer.FileReaderService;
 using IPAddressLogAnalyzer.FilterService;
 using System.Linq;
+using Minio.DataModel.Args;
+using Minio.Exceptions;
+using Minio.DataModel;
+using System;
+using System.Reactive.Linq;
+using System.Runtime.Intrinsics.X86;
+using System.Security.AccessControl;
 
 namespace IPAddressLogAnalyzer.WebAPI
 {
@@ -38,17 +45,23 @@ namespace IPAddressLogAnalyzer.WebAPI
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
 
-            builder.Services.AddOptions<LogFileProccesorSettings>()
+            builder.Services.AddOptions<LogFileProcessorSettings>()
                 .BindConfiguration("LogFileProccesorSettings")
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
 
-            
+
+            //builder.Services.AddOptions<LogMinioSettings>()
+            //    .BindConfiguration("LogMinioSettings")
+            //    .ValidateDataAnnotations()
+            //    .ValidateOnStart();
+
             builder.Services.AddScoped<ILogFilterService, LogFilterService>();
             builder.Services.AddScoped<ILogReaderService, LogFileReaderService>();
-            builder.Services.AddHostedService<LogFileProcessor>();
 
-            //builder.Services.AddScoped<IPService>();
+            builder.Services.AddHostedService<LogFileProcessor>();
+            //builder.Services.AddHostedService<LogMinioProcessor>();
+
 
             var app = builder.Build();
 
@@ -66,37 +79,45 @@ namespace IPAddressLogAnalyzer.WebAPI
 
             app.MapGet("/file", async (ILogReaderService service) =>
             {
-                var endpoint = @"192.168.1.6:9000/buckets";
-                var accessKey = "";
-                var secretKey = "";
+                var endpoint = "192.168.1.6:9000";
+                var accessKey = "EeoUjMZBBNh2WNwXB3CE";
+                var secretKey = "xkBppr2vnEA6QJwpUG0hJnGEmNbMJGc3lk4PaPh4";
+                var bucketName = "miniologs";
 
                 var minioClient = new MinioClient()
-                .WithEndpoint(endpoint)
-                .WithCredentials(accessKey, secretKey);
+                    .WithEndpoint(endpoint)
+                    .WithCredentials(accessKey, secretKey);
 
-                //var getListBucketsTask = await minioClient.ListBucketsAsync().ConfigureAwait(false);
-
-                //if (getListBucketsTask.Buckets is not null)
-                //{
-                //    foreach (var bucket in getListBucketsTask.Buckets)
-                //    {
-                //        if (bucket is not null)
-                //            Console.WriteLine(bucket.Name + " " + bucket.CreationDateDateTime);
-                //        else Console.WriteLine("Пусто");
-                //    }
-                //}
-                //else
-                //{
-                //    Console.WriteLine("Пусто");
-                //}
-
-                string path = "C:\\Users\\Христина\\Desktop\\Логи\\";
-                var logFiles = Directory.GetFiles(path, "*.log", SearchOption.TopDirectoryOnly);
-
-                foreach (var logFile in logFiles.OrderBy(f => f).Take(3))
+                var args = new BucketExistsArgs()
+                    .WithBucket(bucketName);
+                if (await minioClient.BucketExistsAsync(args))
                 {
-                    Console.WriteLine(logFile);
+                    //здесь скачиваем все файлы
                 }
+               
+                //далее мы читаем эти файлы
+                //и названия помещает в Hashset
+               
+
+            });
+
+
+            app.MapGet("/get_status", async () =>
+            {
+
+
+            });
+
+            app.MapPost("/stop_handler", async () =>
+            {
+
+
+            });
+
+            app.MapPost("/start_handler", async () =>
+            {
+
+
             });
 
             app.Run();
