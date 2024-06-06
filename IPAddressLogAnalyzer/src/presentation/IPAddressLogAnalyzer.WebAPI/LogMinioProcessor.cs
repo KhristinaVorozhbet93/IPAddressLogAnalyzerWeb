@@ -1,11 +1,11 @@
-﻿using IPAddressLogAnalyzer.Domain.Interfaces;
+﻿using LogsAnalyzer.Domain.Interfaces;
 using Microsoft.Extensions.Options;
 using Minio;
 using Minio.DataModel;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
 
-namespace IPAddressLogAnalyzer.WebAPI
+namespace LogsAnalyzer.WebAPI
 {
     public class LogMinioProcessor : BackgroundService
     {
@@ -45,7 +45,7 @@ namespace IPAddressLogAnalyzer.WebAPI
                 //получать файлы после указанной даты
 
                 //гугл, how to use minio api 
-                
+
                 var location = "us-east-1";
                 var objectName = "golden-oldies.zip";
                 var filePath = "C:\\Users\\username\\Downloads\\golden_oldies.mp3";

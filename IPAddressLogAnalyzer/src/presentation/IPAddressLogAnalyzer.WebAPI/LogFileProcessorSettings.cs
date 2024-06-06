@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace IPAddressLogAnalyzer.WebAPI
+namespace LogsAnalyzer.WebAPI
 {
     public class LogFileProcessorSettings
     {

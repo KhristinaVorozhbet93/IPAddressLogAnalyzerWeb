@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\domain\IPAddressLogAnalyzer.Domain\IPAddressLogAnalyzer.Domain.csproj" />
+    <ProjectReference Include="..\..\domain\IPAddressLogAnalyzer.Domain\LogsAnalyzer.Domain.csproj" />
   </ItemGroup>
 
 </Project>

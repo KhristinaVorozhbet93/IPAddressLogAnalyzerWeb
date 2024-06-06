@@ -19,10 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\domain\IPAddressLogAnalyzer.Domain\IPAddressLogAnalyzer.Domain.csproj" />
-    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.DataEntityFramework\IPAddressLogAnalyzer.DataEntityFramework.csproj" />
-    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.FileReaderService\IPAddressLogAnalyzer.FileReaderService.csproj" />
-    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.IPAddressFilterService\IPAddressLogAnalyzer.FilterService.csproj" />
+    <ProjectReference Include="..\..\domain\IPAddressLogAnalyzer.Domain\LogsAnalyzer.Domain.csproj" />
+    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.DataEntityFramework\LogsAnalyzer.DataEntityFramework.csproj" />
+    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.FileReaderService\LogsAnalyzer.LogFileReaderService.csproj" />
+    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.IPAddressFilterService\LogsAnalyzer.LogFilterService.csproj" />
   </ItemGroup>
 
 </Project>

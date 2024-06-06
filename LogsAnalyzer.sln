@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPAddressLogAnalyzer.WebAPI", "IPAddressLogAnalyzer\src\presentation\IPAddressLogAnalyzer.WebAPI\IPAddressLogAnalyzer.WebAPI.csproj", "{F4D8C6B6-7219-48FC-B9C9-FD5A2D6AA6B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogsAnalyzer.WebAPI", "IPAddressLogAnalyzer\src\presentation\IPAddressLogAnalyzer.WebAPI\LogsAnalyzer.WebAPI.csproj", "{F4D8C6B6-7219-48FC-B9C9-FD5A2D6AA6B6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{19A9754A-48CD-4652-8E8F-883231DF575E}"
 EndProject
@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "presentation", "presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain", "domain", "{EAA6AC3D-D4B1-4695-B687-19815EC0BC30}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPAddressLogAnalyzer.Domain", "IPAddressLogAnalyzer\src\domain\IPAddressLogAnalyzer.Domain\IPAddressLogAnalyzer.Domain.csproj", "{7B6D57CC-FFE6-4F38-A287-E41F1C928FD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogsAnalyzer.Domain", "IPAddressLogAnalyzer\src\domain\IPAddressLogAnalyzer.Domain\LogsAnalyzer.Domain.csproj", "{7B6D57CC-FFE6-4F38-A287-E41F1C928FD9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPAddressLogAnalyzer.FilterService", "IPAddressLogAnalyzer\src\infrastructure\IPAddressLogAnalyzer.IPAddressFilterService\IPAddressLogAnalyzer.FilterService.csproj", "{07E804B5-B7ED-4BD5-A191-6184A6678CAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogsAnalyzer.LogFilterService", "IPAddressLogAnalyzer\src\infrastructure\IPAddressLogAnalyzer.IPAddressFilterService\LogsAnalyzer.LogFilterService.csproj", "{07E804B5-B7ED-4BD5-A191-6184A6678CAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPAddressLogAnalyzer.DataEntityFramework", "IPAddressLogAnalyzer\src\infrastructure\IPAddressLogAnalyzer.DataEntityFramework\IPAddressLogAnalyzer.DataEntityFramework.csproj", "{1F3E98D5-0D05-4463-8A7F-C05CD387E81B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogsAnalyzer.DataEntityFramework", "IPAddressLogAnalyzer\src\infrastructure\IPAddressLogAnalyzer.DataEntityFramework\LogsAnalyzer.DataEntityFramework.csproj", "{1F3E98D5-0D05-4463-8A7F-C05CD387E81B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPAddressLogAnalyzer.FileReaderService", "IPAddressLogAnalyzer\src\infrastructure\IPAddressLogAnalyzer.FileReaderService\IPAddressLogAnalyzer.FileReaderService.csproj", "{B8CA4BCC-82EE-49BB-BC7D-99E73CD7FB74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogsAnalyzer.LogFileReaderService", "IPAddressLogAnalyzer\src\infrastructure\IPAddressLogAnalyzer.FileReaderService\LogsAnalyzer.LogFileReaderService.csproj", "{B8CA4BCC-82EE-49BB-BC7D-99E73CD7FB74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

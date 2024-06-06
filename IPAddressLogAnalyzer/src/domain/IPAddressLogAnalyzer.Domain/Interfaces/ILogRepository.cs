@@ -1,8 +1,8 @@
-﻿using IPAddressLogAnalyzer.Domain.Entities;
+﻿using LogsAnalyzer.Domain.Entities;
 
-namespace IPAddressLogAnalyzer.Domain.Interfaces
+namespace LogsAnalyzer.Domain.Interfaces
 {
     public interface ILogRepository : IRepositoryEF<LogRecord>
-    {    
+    {
     }
 }

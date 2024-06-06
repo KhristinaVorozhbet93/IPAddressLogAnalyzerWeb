@@ -1,9 +1,9 @@
-﻿using IPAddressLogAnalyzer.Domain.Entities;
+﻿using LogsAnalyzer.Domain.Entities;
 
-namespace IPAddressLogAnalyzer.Domain.Interfaces
+namespace LogsAnalyzer.Domain.Interfaces
 {
     public interface ILogReaderService
     {
-        Task<List<LogRecord>> ReadFromFiletoListAsync(string path,CancellationToken cancellationToken);
+        Task<List<LogRecord>> ReadFromFiletoListAsync(string path, CancellationToken cancellationToken);
     }
 }

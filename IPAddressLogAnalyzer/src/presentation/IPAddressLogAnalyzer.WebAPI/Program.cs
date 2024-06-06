@@ -1,22 +1,16 @@
 using Minio;
-using SocialNetwork.DataEntityFramework;
 using Microsoft.EntityFrameworkCore;
-using IPAddressLogAnalyzer.Domain.Interfaces;
-using IPAddressLogAnalyzer.FileReaderService;
-using IPAddressLogAnalyzer.FilterService;
-using System.Linq;
-using Minio.DataModel.Args;
-using Minio.Exceptions;
-using Minio.DataModel;
-using System;
-using System.Reactive.Linq;
-using System.Runtime.Intrinsics.X86;
-using System.Security.AccessControl;
-using IPAddressLogAnalyzer.DataEntityFramework.Repositories;
+using LogsAnalyzer.Domain.Interfaces;
+using LogsAnalyzer.Domain.Entities;
+using LogsAnalyzer.DataEntityFramework;
+using LogsAnalyzer.DataEntityFramework.Repositories;
+using LogsAnalyzer.LogFileReaderServices;
+using LogsAnalyzer.LogFilterServices;
+using LogsAnalyzer.Domain.Services;
 
-namespace IPAddressLogAnalyzer.WebAPI
+namespace LogsAnalyzer.WebAPI
 {
-    //настроить работу с бд
+
     public class Program
     {
         public static void Main(string[] args)
@@ -29,10 +23,10 @@ namespace IPAddressLogAnalyzer.WebAPI
             {
                 throw new InvalidOperationException("PostgresConfig is not configured");
             }
-
+           
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(
-                    $"Host={postgresConfig.ServerName};" +
+                    $"Server={postgresConfig.ServerName};" +
                     $"Port={postgresConfig.Port};" +
                     $"Database={postgresConfig.DatabaseName};" +
                     $"Username={postgresConfig.UserName};" +
@@ -63,6 +57,7 @@ namespace IPAddressLogAnalyzer.WebAPI
             builder.Services.AddScoped<ILogRepository, LogRepository>();
             builder.Services.AddHostedService<LogFileProcessor>();
             //builder.Services.AddHostedService<LogMinioProcessor>();
+            builder.Services.AddScoped<LogRecordService>();
 
             var app = builder.Build();
 
@@ -80,25 +75,23 @@ namespace IPAddressLogAnalyzer.WebAPI
 
             app.MapGet("/file", async (ILogReaderService service) =>
             {
-                var endpoint = "192.168.1.6:9000";
-                var accessKey = "";
-                var secretKey = "";
-                var bucketName = "miniologs";
+                //var endpoint = "192.168.1.6:9000";
+                //var accessKey = "";
+                //var secretKey = "";
+                //var bucketName = "miniologs";
 
-                var minioClient = new MinioClient()
-                    .WithEndpoint(endpoint)
-                    .WithCredentials(accessKey, secretKey);
+                //var minioClient = new MinioClient()
+                //    .WithEndpoint(endpoint)
+                //    .WithCredentials(accessKey, secretKey);
 
-                var args = new BucketExistsArgs()
-                    .WithBucket(bucketName);
-                if (await minioClient.BucketExistsAsync(args))
-                {
-                    //здесь скачиваем все файлы
-                }
-               
+                //var args = new BucketExistsArgs()
+                //    .WithBucket(bucketName);
+                //if (await minioClient.BucketExistsAsync(args))
+                //{
+                //    //здесь скачиваем все файлы
+                //}
+
                 //далее мы читаем эти файлы
-              
-
             });
 
 

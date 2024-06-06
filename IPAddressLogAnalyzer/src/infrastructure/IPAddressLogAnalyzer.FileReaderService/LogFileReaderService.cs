@@ -1,9 +1,9 @@
-﻿using IPAddressLogAnalyzer.Domain.Entities;
-using IPAddressLogAnalyzer.Domain.Interfaces;
+﻿using LogsAnalyzer.Domain.Entities;
+using LogsAnalyzer.Domain.Interfaces;
 using System.Globalization;
 using System.Net;
 
-namespace IPAddressLogAnalyzer.FileReaderService
+namespace LogsAnalyzer.LogFileReaderServices
 {
     public class LogFileReaderService : ILogReaderService
     {
@@ -47,12 +47,12 @@ namespace IPAddressLogAnalyzer.FileReaderService
                         var statusMessage = parts[12].Trim();
                         var contentType = parts[13].Trim();
                         var contentLength = Convert.ToInt32(parts[14].Trim());
-                        var executionTime = TimeSpan.Parse (parts[15].Trim());
+                        var executionTime = TimeSpan.Parse(parts[15].Trim());
                         var memoryUsage = Convert.ToInt32(parts[16].Trim());
 
                         logs.Add
                             (new LogRecord
-                            (requestTime, applicationName, stage, ipAddress, clientName, clientVersion, method, method, 
+                            (Guid.NewGuid(), requestTime, applicationName, stage, ipAddress, clientName, clientVersion, path, method,
                             statusCode, statusMessage, contentType, contentLength, executionTime, memoryUsage));
                     }
                 }

@@ -1,25 +1,23 @@
-﻿using IPAddressLogAnalyzer.Domain.Interfaces;
+﻿using LogsAnalyzer.Domain.Interfaces;
+using LogsAnalyzer.Domain.Services;
 using Microsoft.Extensions.Options;
 
-namespace IPAddressLogAnalyzer.WebAPI
+namespace LogsAnalyzer.WebAPI
 {
     public class LogFileProcessor : BackgroundService
     {
-        private readonly ILogger<LogFileProcessor> _logger; 
+        private readonly ILogger<LogFileProcessor> _logger;
         private readonly IOptions<LogFileProcessorSettings> _options;
         private readonly IServiceProvider _serviceProvider;
-        private readonly ILogRepository _logRepository;
         private readonly HashSet<string> _processedFiles = new HashSet<string>();
 
-        public LogFileProcessor(ILogger<LogFileProcessor> logger, 
+        public LogFileProcessor(ILogger<LogFileProcessor> logger,
             IOptions<LogFileProcessorSettings> options,
-            IServiceProvider serviceProvider,
-            ILogRepository logRepository)
+            IServiceProvider serviceProvider)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger)); ;
-            _options = options ?? throw new ArgumentNullException(nameof(options)); ;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-            _logRepository = logRepository ?? throw new ArgumentNullException(nameof(logRepository)); ;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -54,14 +52,14 @@ namespace IPAddressLogAnalyzer.WebAPI
             await using var scope = _serviceProvider.CreateAsyncScope();
             var localServiceProvider = scope.ServiceProvider;
             var logReaderService = localServiceProvider.GetRequiredService<ILogReaderService>();
-
+            var logRecordService= localServiceProvider.GetRequiredService<LogRecordService>();
             try
             {
                 var logs = await logReaderService.ReadFromFiletoListAsync(logFile, stoppingToken);
                 for (int i = 0; i < logs.Count; i++)
                 {
-                    await _logRepository.Add(logs[i], stoppingToken);
-                }             
+                    await logRecordService.AddLogRecord(logs[i], stoppingToken);
+                }
             }
             catch (Exception ex)
             {

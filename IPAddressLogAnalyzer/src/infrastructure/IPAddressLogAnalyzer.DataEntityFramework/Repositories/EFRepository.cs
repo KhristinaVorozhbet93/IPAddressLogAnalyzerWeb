@@ -1,8 +1,7 @@
-﻿using IPAddressLogAnalyzer.Domain.Interfaces;
+﻿using LogsAnalyzer.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using SocialNetwork.DataEntityFramework;
 
-namespace IPAddressLogAnalyzer.DataEntityFramework.Repositories
+namespace LogsAnalyzer.DataEntityFramework.Repositories
 {
     public class EFRepository<TEntity> : IRepositoryEF<TEntity> where TEntity : class, IEntity
     {

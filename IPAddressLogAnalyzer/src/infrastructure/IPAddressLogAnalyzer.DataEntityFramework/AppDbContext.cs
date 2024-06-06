@@ -1,11 +1,11 @@
-﻿using IPAddressLogAnalyzer.Domain.Entities;
+﻿using LogsAnalyzer.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace SocialNetwork.DataEntityFramework
+namespace LogsAnalyzer.DataEntityFramework
 {
     public class AppDbContext : DbContext
     {
-        DbSet<LogRecord> LogRecords => Set<LogRecord>();
+        DbSet<LogRecord> Logs => Set<LogRecord>();
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options) { }
 

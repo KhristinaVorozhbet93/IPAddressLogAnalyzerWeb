@@ -1,7 +1,7 @@
-﻿using IPAddressLogAnalyzer.Domain.Interfaces;
+﻿using LogsAnalyzer.Domain.Interfaces;
 using System.Net;
 
-namespace IPAddressLogAnalyzer.Domain.Entities
+namespace LogsAnalyzer.Domain.Entities
 {
     public class LogRecord : IEntity
     {
@@ -21,11 +21,13 @@ namespace IPAddressLogAnalyzer.Domain.Entities
         private TimeSpan _executionTime;
         private int _memoryUsage;
 
-        public LogRecord(DateTime requestTime, string applicationName, string stage,
+        protected LogRecord () { }
+        public LogRecord(Guid id, DateTime requestTime, string applicationName, string stage,
             IPAddress сlientIpAddress, string clientName, string clientVersion, string path,
             string method, string statusCode, string statusMessage, string contentType,
             int contentLength, TimeSpan executionTime, int memoryUsage)
         {
+            _id = id;
             _applicationName = applicationName ?? throw new ArgumentNullException(nameof(applicationName));
             _stage = stage ?? throw new ArgumentNullException(nameof(stage));
             _clientName = clientName ?? throw new ArgumentNullException(nameof(clientName));
@@ -35,7 +37,7 @@ namespace IPAddressLogAnalyzer.Domain.Entities
             _statusCode = statusCode ?? throw new ArgumentNullException(nameof(statusCode));
             _statusMessage = statusMessage ?? throw new ArgumentNullException(nameof(statusMessage));
             _contentType = contentType ?? throw new ArgumentNullException(nameof(contentType));
-         
+
             if (contentLength < 0)
             {
                 throw new ArgumentNullException(nameof(contentLength));
@@ -48,7 +50,7 @@ namespace IPAddressLogAnalyzer.Domain.Entities
             _memoryUsage = memoryUsage;
             _requestTime = requestTime;
             _сlientIpAddress = сlientIpAddress;
-            _executionTime = executionTime;         
+            _executionTime = executionTime;
         }
 
         public Guid Id
@@ -235,7 +237,7 @@ namespace IPAddressLogAnalyzer.Domain.Entities
                 _contentLength = value;
             }
         }
-        public TimeSpan MyProperty
+        public TimeSpan ExecutionTime
         {
             get
             {

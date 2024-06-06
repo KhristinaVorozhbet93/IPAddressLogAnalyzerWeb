@@ -1,11 +1,10 @@
-﻿using IPAddressLogAnalyzer.Domain.Entities;
-using IPAddressLogAnalyzer.Domain.Interfaces;
-using SocialNetwork.DataEntityFramework;
+﻿using LogsAnalyzer.Domain.Entities;
+using LogsAnalyzer.Domain.Interfaces;
 
-namespace IPAddressLogAnalyzer.DataEntityFramework.Repositories
+namespace LogsAnalyzer.DataEntityFramework.Repositories
 {
     public class LogRepository : EFRepository<LogRecord>, ILogRepository
     {
-        public LogRepository(AppDbContext appDbContext) : base(appDbContext){}
+        public LogRepository(AppDbContext appDbContext) : base(appDbContext) { }
     }
 }

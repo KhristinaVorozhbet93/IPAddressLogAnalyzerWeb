@@ -1,8 +1,9 @@
-﻿using IPAddressLogAnalyzer.Domain.Entities;
-using IPAddressLogAnalyzer.Domain.Interfaces;
+﻿using LogsAnalyzer.Domain.Entities;
+using LogsAnalyzer.Domain.Interfaces;
 using Microsoft.Extensions.Options;
 using System.Net;
-namespace IPAddressLogAnalyzer.FilterService
+
+namespace LogsAnalyzer.LogFilterServices
 {
     public class LogFilterService : ILogFilterService
     {

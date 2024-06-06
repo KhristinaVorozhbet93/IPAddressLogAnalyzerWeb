@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace IPAddressLogAnalyzer.WebAPI
+namespace LogsAnalyzer.WebAPI
 {
     public class LogMinioSettings
     {
         [Required]
-        public string Endpoint{ get; set; }
+        public string Endpoint { get; set; }
 
         [Required]
-        public string AccesKey{ get; set; }
+        public string AccesKey { get; set; }
 
         [Required]
         public string SecretKey { get; set; }

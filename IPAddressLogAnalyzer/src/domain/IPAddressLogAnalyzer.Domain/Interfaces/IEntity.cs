@@ -1,4 +1,4 @@
-﻿namespace IPAddressLogAnalyzer.Domain.Interfaces
+﻿namespace LogsAnalyzer.Domain.Interfaces
 {
     public interface IEntity
     {
