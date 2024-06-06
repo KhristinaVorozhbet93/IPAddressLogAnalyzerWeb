@@ -1,8 +1,9 @@
-﻿using System.Net;
+﻿using IPAddressLogAnalyzer.Domain.Interfaces;
+using System.Net;
 
 namespace IPAddressLogAnalyzer.Domain.Entities
 {
-    public class LogRecord
+    public class LogRecord : IEntity
     {
         private Guid _id;
         private DateTime _requestTime;

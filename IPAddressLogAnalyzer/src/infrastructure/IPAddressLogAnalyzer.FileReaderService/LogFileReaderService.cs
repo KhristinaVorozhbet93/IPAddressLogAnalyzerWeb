@@ -7,6 +7,7 @@ namespace IPAddressLogAnalyzer.FileReaderService
 {
     public class LogFileReaderService : ILogReaderService
     {
+        //возможно, фильтрация пригодится позже
         private readonly ILogFilterService _iPAddressFilterService;
         public LogFileReaderService(ILogFilterService iPAddressFilterService)
         {
@@ -33,25 +34,29 @@ namespace IPAddressLogAnalyzer.FileReaderService
                     if (!string.IsNullOrWhiteSpace(line))
                     {
                         var parts = line.Split(':', StringSplitOptions.RemoveEmptyEntries);
-                        var ipAddress = IPAddress.Parse(parts[0].Trim());
-                        var timeRequest = 
-                            DateTime.ParseExact($"{parts[1]} {parts[2]}:{parts[3]}:{parts[4]}", "yyyy-MM-dd HH:mm:ss", provider);
-                        var countRequest = Convert.ToInt16(parts[5].Trim());
-                        var resource = parts[6].Trim();
-                        var path = parts[7].Trim();
-                        var method = parts[8].Trim();
-                        var response = parts[9].Trim();
+                        var requestTime =
+                            DateTime.ParseExact($"{parts[0]} {parts[1]}:{parts[2]}:{parts[3]}", "yyyy-MM-dd HH:mm:ss", provider);
+                        var applicationName = parts[4].Trim();
+                        var stage = parts[5].Trim();
+                        var ipAddress = IPAddress.Parse(parts[6].Trim());
+                        var clientName = parts[7].Trim();
+                        var clientVersion = parts[8].Trim();
+                        var path = parts[9].Trim();
+                        var method = parts[10].Trim();
+                        var statusCode = parts[11].Trim();
+                        var statusMessage = parts[12].Trim();
+                        var contentType = parts[13].Trim();
+                        var contentLength = Convert.ToInt32(parts[14].Trim());
+                        var executionTime = TimeSpan.Parse (parts[15].Trim());
+                        var memoryUsage = Convert.ToInt32(parts[16].Trim());
 
-                        logs.Add(new LogRecord(ipAddress, timeRequest, countRequest, resource, path, method, response));
-                    }
-                    else
-                    {
-                        //записываем в ErrorAccesLog
+                        logs.Add
+                            (new LogRecord
+                            (requestTime, applicationName, stage, ipAddress, clientName, clientVersion, method, method, 
+                            statusCode, statusMessage, contentType, contentLength, executionTime, memoryUsage));
                     }
                 }
-
-                var filtredLogs = _iPAddressFilterService.GetIPAddressesWithConfigurations(logs);
-                return filtredLogs;
+                return logs;
             }
             throw new ArgumentException($"Не удалось найти файл: {filePath}");
         }

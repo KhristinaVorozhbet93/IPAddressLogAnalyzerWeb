@@ -12,9 +12,11 @@ using System;
 using System.Reactive.Linq;
 using System.Runtime.Intrinsics.X86;
 using System.Security.AccessControl;
+using IPAddressLogAnalyzer.DataEntityFramework.Repositories;
 
 namespace IPAddressLogAnalyzer.WebAPI
 {
+    //настроить работу с бд
     public class Program
     {
         public static void Main(string[] args)
@@ -50,7 +52,6 @@ namespace IPAddressLogAnalyzer.WebAPI
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
 
-
             //builder.Services.AddOptions<LogMinioSettings>()
             //    .BindConfiguration("LogMinioSettings")
             //    .ValidateDataAnnotations()
@@ -58,10 +59,10 @@ namespace IPAddressLogAnalyzer.WebAPI
 
             builder.Services.AddScoped<ILogFilterService, LogFilterService>();
             builder.Services.AddScoped<ILogReaderService, LogFileReaderService>();
-
+            builder.Services.AddScoped(typeof(IRepositoryEF<>), typeof(EFRepository<>));
+            builder.Services.AddScoped<ILogRepository, LogRepository>();
             builder.Services.AddHostedService<LogFileProcessor>();
             //builder.Services.AddHostedService<LogMinioProcessor>();
-
 
             var app = builder.Build();
 
@@ -80,8 +81,8 @@ namespace IPAddressLogAnalyzer.WebAPI
             app.MapGet("/file", async (ILogReaderService service) =>
             {
                 var endpoint = "192.168.1.6:9000";
-                var accessKey = "EeoUjMZBBNh2WNwXB3CE";
-                var secretKey = "xkBppr2vnEA6QJwpUG0hJnGEmNbMJGc3lk4PaPh4";
+                var accessKey = "";
+                var secretKey = "";
                 var bucketName = "miniologs";
 
                 var minioClient = new MinioClient()
@@ -96,8 +97,7 @@ namespace IPAddressLogAnalyzer.WebAPI
                 }
                
                 //далее мы читаем эти файлы
-                //и названия помещает в Hashset
-               
+              
 
             });
 

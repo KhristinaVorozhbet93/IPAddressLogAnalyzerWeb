@@ -5,7 +5,7 @@ namespace SocialNetwork.DataEntityFramework
 {
     public class AppDbContext : DbContext
     {
-        DbSet<LogRecord> AccesLogs => Set<LogRecord>();
+        DbSet<LogRecord> LogRecords => Set<LogRecord>();
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options) { }
 

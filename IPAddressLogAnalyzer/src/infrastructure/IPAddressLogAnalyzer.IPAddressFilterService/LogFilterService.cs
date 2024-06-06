@@ -49,25 +49,13 @@ namespace IPAddressLogAnalyzer.FilterService
         }
         public List<LogRecord> GetIPAddressesInTimeInterval(List<LogRecord> logs, DateTime timeStart, DateTime timeEnd)
         {
-            return logs.Where(ip =>
-                    ip.TimeRequest <= timeEnd &&
-                    ip.TimeRequest >= timeStart)
-                    .ToList();
+            //заглушка
+            return null;
         }
         public List<LogRecord> GetIPAddressesWithCountTimeRequests(List<LogRecord> logs)
         {
-            return logs
-                .GroupBy(ip => ip.ClientIpAddress) 
-                .Select(group => new LogRecord(
-                    group.Key,
-                    group.First().TimeRequest, 
-                    group.Sum(log => log.RequestCount), 
-                    group.First().Resource, 
-                    group.First().Path, 
-                    group.First().Method, 
-                    group.First().Response
-                ))
-                .ToList();
+            //заглушка
+            return null;
         }
 
         private bool IsIPAddressInRange(IPAddress ipAddress, IPAddress addressStart, IPAddress addressMask)
