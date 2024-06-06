@@ -1,7 +1,6 @@
 using Minio;
 using Microsoft.EntityFrameworkCore;
 using LogsAnalyzer.Domain.Interfaces;
-using LogsAnalyzer.Domain.Entities;
 using LogsAnalyzer.DataEntityFramework;
 using LogsAnalyzer.DataEntityFramework.Repositories;
 using LogsAnalyzer.LogFileReaderServices;

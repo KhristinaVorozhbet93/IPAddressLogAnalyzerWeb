@@ -19,10 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\domain\IPAddressLogAnalyzer.Domain\LogsAnalyzer.Domain.csproj" />
-    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.DataEntityFramework\LogsAnalyzer.DataEntityFramework.csproj" />
-    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.FileReaderService\LogsAnalyzer.LogFileReaderService.csproj" />
-    <ProjectReference Include="..\..\infrastructure\IPAddressLogAnalyzer.IPAddressFilterService\LogsAnalyzer.LogFilterService.csproj" />
+    <ProjectReference Include="..\..\domain\LogsAnalyzer.Domain\LogsAnalyzer.Domain.csproj" />
+    <ProjectReference Include="..\..\infrastructure\LogsAnalyzer.DataEntityFramework\LogsAnalyzer.DataEntityFramework.csproj" />
+    <ProjectReference Include="..\..\infrastructure\LogsAnalyzer.FileReaderService\LogsAnalyzer.LogFileReaderService.csproj" />
+    <ProjectReference Include="..\..\infrastructure\LogsAnalyzer.IPAddressFilterService\LogsAnalyzer.LogFilterService.csproj" />
+    <ProjectReference Include="..\..\infrastructure\LogsAnalyzer.DataEntityFramework\LogsAnalyzer.DataEntityFramework.csproj" />
+    <ProjectReference Include="..\..\infrastructure\LogsAnalyzer.FileReaderService\LogsAnalyzer.LogFileReaderService.csproj" />
+    <ProjectReference Include="..\..\infrastructure\LogsAnalyzer.IPAddressFilterService\LogsAnalyzer.LogFilterService.csproj" />
   </ItemGroup>
 
 </Project>
