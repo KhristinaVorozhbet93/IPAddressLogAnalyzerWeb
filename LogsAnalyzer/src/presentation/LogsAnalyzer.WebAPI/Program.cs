@@ -84,7 +84,7 @@ namespace LogsAnalyzer.WebAPI
                 var endpoint = "192.168.1.6:9000";
                 var accessKey = "pkz2VomYVTqpZC1YMDgT";
                 var secretKey = "rpzwVeSJMbxpOdOnXGDQSsIABnCfP5gsuNZtDoih";
-                var bucketName = "miniologs3";
+                var bucketName = "miniologs";
                 var path = "C:\\Users\\Христина\\Desktop\\minio";
 
 
@@ -97,20 +97,19 @@ namespace LogsAnalyzer.WebAPI
                     .WithBucket(bucketName);
 
 
+                var list = await minioClient.ListBucketsAsync();
+          
+                foreach (var bucket in list.Buckets)
+                {
+                    Console.WriteLine($"{bucket.Name} {bucket.CreationDateDateTime}");
+                }
+                
+                
                 if (await minioClient.BucketExistsAsync(args))
                 {
                     try
                     {
-                        //var list = await minioClient.ListBucketsAsync();
-                        ////но он тут пишет что null, нет никаких list.Buckets
-                        //foreach (var bucket in list.Buckets)
-                        //{
-                        //    Console.WriteLine($"{bucket.Name} {bucket.CreationDateDateTime}");
-                        //}
-
-                        //        var list = await minioClient.PresignedGetObjectAsync(new PresignedGetObjectArgs()
-                        //.WithBucket(bucketName));
-
+                        
                         //var getListBucketsTask = await minioClient.ListBucketsAsync().ConfigureAwait(false);
 
                         // Iterate over the list of buckets.
@@ -119,11 +118,11 @@ namespace LogsAnalyzer.WebAPI
                           //  Console.WriteLine(bucket.Name + " " + bucket.CreationDateDateTime);
                         //}
 
-                        string loc = "us-east-1";
+                     
 
                         await minioClient.MakeBucketAsync(
                             new MakeBucketArgs()
-                                .WithBucket(bucketName));
+                                .WithBucket("test"));
                       
                         Console.WriteLine($"Created bucket {bucketName}");
 
