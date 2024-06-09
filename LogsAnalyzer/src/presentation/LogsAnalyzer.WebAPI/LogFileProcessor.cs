@@ -1,5 +1,4 @@
 ﻿using LogsAnalyzer.Domain.Interfaces;
-using LogsAnalyzer.Domain.Services;
 using Microsoft.Extensions.Options;
 
 namespace LogsAnalyzer.WebAPI
@@ -52,14 +51,9 @@ namespace LogsAnalyzer.WebAPI
             await using var scope = _serviceProvider.CreateAsyncScope();
             var localServiceProvider = scope.ServiceProvider;
             var logReaderService = localServiceProvider.GetRequiredService<ILogReaderService>();
-            var logRecordService= localServiceProvider.GetRequiredService<LogRecordService>();
             try
             {
-                var logs = await logReaderService.ReadFromFiletoListAsync(logFile, stoppingToken);
-                for (int i = 0; i < logs.Count; i++)
-                {
-                    await logRecordService.AddLogRecord(logs[i], stoppingToken);
-                }
+                await logReaderService.ReadFromFileAsync(logFile, stoppingToken);
             }
             catch (Exception ex)
             {

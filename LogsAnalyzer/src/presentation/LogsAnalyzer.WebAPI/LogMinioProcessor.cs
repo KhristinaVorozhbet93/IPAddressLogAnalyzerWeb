@@ -88,7 +88,7 @@ namespace LogsAnalyzer.WebAPI
 
             try
             {
-                await logReaderService.ReadFromFiletoListAsync(logFile, stoppingToken);
+                await logReaderService.ReadFromFileAsync(logFile, stoppingToken);
                 //здесь будет запись в бд
             }
             catch (Exception ex)

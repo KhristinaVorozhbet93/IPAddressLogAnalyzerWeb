@@ -4,6 +4,6 @@ namespace LogsAnalyzer.Domain.Interfaces
 {
     public interface ILogReaderService
     {
-        Task<List<LogRecord>> ReadFromFiletoListAsync(string path, CancellationToken cancellationToken);
+        Task ReadFromFileAsync(string path, CancellationToken cancellationToken);
     }
 }

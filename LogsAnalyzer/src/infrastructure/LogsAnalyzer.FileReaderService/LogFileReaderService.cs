@@ -8,13 +8,15 @@ namespace LogsAnalyzer.LogFileReaderServices
     public class LogFileReaderService : ILogReaderService
     {
         //возможно, фильтрация пригодится позже
-        private readonly ILogFilterService _iPAddressFilterService;
-        public LogFileReaderService(ILogFilterService iPAddressFilterService)
+        private readonly ILogFilterService _logFilterService;
+        private readonly ILogRepository _logRepository;
+        public LogFileReaderService(ILogFilterService logFilterService,
+            ILogRepository logRepository)
         {
-            ArgumentException.ThrowIfNullOrWhiteSpace(nameof(iPAddressFilterService));
-            _iPAddressFilterService = iPAddressFilterService;
+            _logFilterService = logFilterService ?? throw new ArgumentNullException(nameof(logFilterService));
+            _logRepository = logRepository ?? throw new ArgumentNullException(nameof(logRepository));
         }
-        public async Task<List<LogRecord>> ReadFromFiletoListAsync(string filePath, CancellationToken cancellationToken)
+        public async Task ReadFromFileAsync(string filePath, CancellationToken cancellationToken)
         {
             ArgumentException.ThrowIfNullOrEmpty(filePath);
 
@@ -50,13 +52,13 @@ namespace LogsAnalyzer.LogFileReaderServices
                         var executionTime = TimeSpan.Parse(parts[15].Trim());
                         var memoryUsage = Convert.ToInt32(parts[16].Trim());
 
-                        logs.Add
-                            (new LogRecord
-                            (Guid.NewGuid(), requestTime, applicationName, stage, ipAddress, clientName, clientVersion, path, method,
-                            statusCode, statusMessage, contentType, contentLength, executionTime, memoryUsage));
+                        var logRecord = new LogRecord
+                        (Guid.NewGuid(), requestTime, applicationName, stage, ipAddress, clientName, clientVersion, path, method,
+                        statusCode, statusMessage, contentType, contentLength, executionTime, memoryUsage);
+
+                        await _logRepository.Add(logRecord, cancellationToken);
                     }
                 }
-                return logs;
             }
             throw new ArgumentException($"Не удалось найти файл: {filePath}");
         }
